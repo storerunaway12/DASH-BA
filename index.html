@@ -3,7 +3,10 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-<meta name="theme-color" content="#0F1115" />
+<meta name="theme-color" content="#FFFFFF" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
 <title>Painel do Investidor</title>
 <meta name="description" content="Acompanhamento em tempo real dos aportes e rendimentos." />
 
@@ -14,26 +17,25 @@
 
 <style>
   :root{
-    --bg:#0F1115; --gold:#D4AF37; --green:#16C784; --red:#F6465D;
-    --txt:#EDEFF3; --muted:#8B919C; --line:rgba(255,255,255,.07); --glass:rgba(255,255,255,.032);
+    --bg:#FFFFFF; --wash:#F5F9F7; --ink:#101828; --muted:#667085;
+    --line:#E7EBEF; --acento:#0F9D63; --positivo:#12B76A; --suave:#A7E8CB; --red:#D92D20;
   }
   *{box-sizing:border-box}
   html,body{margin:0;height:100%}
   body{
-    background:var(--bg); color:var(--txt); -webkit-font-smoothing:antialiased;
-    font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Inter,Roboto,Arial,sans-serif;
+    background:var(--bg); color:var(--ink); -webkit-font-smoothing:antialiased; font-size:15px;
+    font-family:Nunito,ui-rounded,"SF Pro Rounded",system-ui,-apple-system,"Segoe UI",sans-serif;
     overflow-x:hidden;
   }
   button{font-family:inherit}
   .wrap{max-width:1200px;margin:0 auto;padding:28px 16px 40px;position:relative}
   @media(min-width:640px){.wrap{padding:40px 24px 56px}}
-  .glass{background:var(--glass);border:1px solid var(--line);border-radius:20px;
-    backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
-    box-shadow:0 1px 0 rgba(255,255,255,.04) inset,0 24px 60px -30px rgba(0,0,0,.9)}
+  .glass{background:#fff;border:1px solid var(--line);border-radius:22px;
+    box-shadow:0 1px 2px rgba(16,24,40,.04),0 14px 34px -22px rgba(16,24,40,.30)}
   .atmos{position:fixed;inset:0;pointer-events:none;
-    background:radial-gradient(60% 40% at 12% -5%,#D4AF3712,transparent 65%),radial-gradient(50% 35% at 95% 0%,#16C7840e,transparent 60%)}
-  .eyebrow{color:var(--muted);font-size:11px;letter-spacing:.18em;text-transform:uppercase;font-weight:600}
-  .num{font-variant-numeric:tabular-nums}
+    background:radial-gradient(55% 38% at 8% -6%,#0F9D6314,transparent 62%),radial-gradient(45% 30% at 96% 0%,#12B76A0d,transparent 60%)}
+  .eyebrow{color:var(--muted);font-size:11.5px;letter-spacing:.13em;text-transform:uppercase;font-weight:700}
+  .num{font-variant-numeric:tabular-nums;font-feature-settings:"tnum"}
   .row{display:flex}.mid{align-items:center}.wrapf{flex-wrap:wrap}
   .grid{display:grid;gap:14px}
   .g4{grid-template-columns:1fr}
@@ -41,34 +43,35 @@
   @media(min-width:1100px){.g4{grid-template-columns:repeat(4,1fr)}}
   .g3{grid-template-columns:1fr}
   @media(min-width:640px){.g3{grid-template-columns:repeat(3,1fr)}}
-  input,select{width:100%;background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:12px;
-    color:var(--txt);padding:10px 12px;font-size:14px;outline:none;font-variant-numeric:tabular-nums;font-family:inherit}
-  input::placeholder{color:#5c626c}
-  input:focus{border-color:#D4AF3766;box-shadow:0 0 0 3px #D4AF371a}
-  input[type=date]::-webkit-calendar-picker-indicator{filter:invert(.65)}
+  input,select{width:100%;background:#F9FAFB;border:1px solid var(--line);border-radius:14px;
+    color:var(--ink);padding:11px 13px;font-size:15px;outline:none;font-variant-numeric:tabular-nums;font-family:inherit;font-weight:600}
+  input::placeholder{color:#9AA3AF;font-weight:400}
+  input:focus{border-color:var(--acento);box-shadow:0 0 0 3px #0F9D631f;background:#fff}
+  input:disabled{background:#F2F4F7;color:var(--muted)}
+  input[type=date]::-webkit-calendar-picker-indicator{opacity:.5}
   table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
-  th{color:var(--muted);font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;padding:0 12px 12px;white-space:nowrap}
-  td{padding:13px 12px;font-size:14px;border-top:1px solid var(--line)}
+  th{color:var(--muted);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;padding:0 12px 12px;white-space:nowrap}
+  td{padding:14px 12px;font-size:14.5px;border-top:1px solid var(--line);font-weight:600}
   .tabbtn{display:flex;align-items:center;gap:8px;padding:10px 14px;white-space:nowrap;background:none;
-    border:none;border-bottom:2px solid transparent;margin-bottom:-1px;cursor:pointer;font-size:13.5px;color:var(--muted);transition:.2s}
-  .tabbtn.on{color:var(--txt);font-weight:650;border-bottom-color:var(--gold)}
-  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:9px 14px;border-radius:12px;
-    font-size:13px;font-weight:600;cursor:pointer;transition:transform .2s,filter .2s;
-    background:rgba(255,255,255,.04);border:1px solid var(--line);color:var(--txt)}
-  .btn:hover{transform:translateY(-1px)}
-  .btn.gold{background:var(--gold);border-color:var(--gold);color:#12140f}
-  .btn.danger{background:rgba(246,70,93,.10);border-color:rgba(246,70,93,.25);color:var(--red)}
-  .pill{font-size:10.5px;font-weight:700;padding:3px 9px;border-radius:999px;white-space:nowrap}
-  .icobox{display:grid;place-items:center;border-radius:10px;flex-shrink:0}
+    border:none;border-bottom:2px solid transparent;margin-bottom:-1px;cursor:pointer;font-size:14.5px;font-weight:600;color:var(--muted);transition:.2s}
+  .tabbtn.on{color:var(--ink);font-weight:800;border-bottom-color:var(--acento)}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:10px 15px;border-radius:14px;
+    font-size:14px;font-weight:700;cursor:pointer;transition:transform .2s,box-shadow .2s;
+    background:#fff;border:1px solid var(--line);color:var(--ink)}
+  .btn:hover{transform:translateY(-1px);box-shadow:0 6px 16px -8px rgba(16,24,40,.35)}
+  .btn.gold{background:var(--acento);border-color:var(--acento);color:#fff;box-shadow:0 8px 20px -10px #0F9D63}
+  .btn.danger{background:#FEF3F2;border-color:#FDA29B;color:var(--red)}
+  .pill{font-size:11px;font-weight:800;padding:3px 10px;border-radius:999px;white-space:nowrap}
+  .icobox{display:grid;place-items:center;border-radius:12px;flex-shrink:0}
   @keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
-  @keyframes pulse{0%,100%{opacity:1;box-shadow:0 0 0 0 #16C78466}50%{opacity:.55;box-shadow:0 0 0 5px #16C78400}}
+  @keyframes pulse{0%,100%{opacity:1;box-shadow:0 0 0 0 #12B76A66}50%{opacity:.5;box-shadow:0 0 0 5px #12B76A00}}
   .rise{animation:rise .6s cubic-bezier(.16,1,.3,1) both}
-  .dot{width:7px;height:7px;border-radius:99px;background:var(--green);animation:pulse 1.8s ease-in-out infinite}
+  .dot{width:7px;height:7px;border-radius:99px;background:var(--positivo);animation:pulse 1.8s ease-in-out infinite}
   ::-webkit-scrollbar{width:9px;height:9px}
-  ::-webkit-scrollbar-thumb{background:rgba(255,255,255,.10);border-radius:99px}
+  ::-webkit-scrollbar-thumb{background:#D7DBE0;border-radius:99px}
   ::-webkit-scrollbar-track{background:transparent}
   .scrollx{overflow-x:auto}
-  #boot{position:fixed;inset:0;display:grid;place-items:center;background:var(--bg);z-index:99;color:var(--muted);font-size:13px}
+  #boot{position:fixed;inset:0;display:grid;place-items:center;background:#fff;z-index:99;color:#667085;font-size:14px}
   @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
@@ -91,11 +94,11 @@ const CONFIG = {
 const { useState, useEffect, useMemo, useCallback, useRef } = React;
 
 /* ─── cores ─── */
-const GOLD="#D4AF37", GREEN="#16C784", RED="#F6465D", BG="#0F1115",
-      TXT="#EDEFF3", MUTED="#8B919C", LINE="rgba(255,255,255,.07)";
+const ACENTO="#0F9D63", POSITIVO="#12B76A", SUAVE="#A7E8CB", RED="#D92D20", BG="#FFFFFF",
+      TXT="#101828", MUTED="#667085", LINE="#E7EBEF";
 
 /* ─── datas e dinheiro ─── */
-const MS_DAY=86400000, AVG_MONTH=30.436875;
+const MS_DAY=86400000;
 const MESES=["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
 const MES_CURTO=["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"];
 
@@ -109,11 +112,20 @@ const toDate=(s)=>new Date(s+"T12:00:00");
 const toIso=(d)=>d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
 const fmtDate=(s)=>toDate(s).toLocaleDateString("pt-BR");
 
-/* ─── juros compostos por fração de mês ─── */
-const meses=(a,b)=>(b-a)/(AVG_MONTH*MS_DAY);
-const cresce=(r,m)=>Math.pow(1+r,m);
+/* ─── rendimento: 10% a cada ciclo de 30 dias ───
+   Ao fechar 30 dias, o valor recebe a taxa cheia sobre o saldo do ciclo anterior
+   (3.000 → 3.300 → 3.630). Dentro do ciclo em andamento o rendimento aparece
+   proporcional aos dias corridos, sem juros sobre juros diário.            */
+const CICLO=30;
+const ciclos=(a,b)=>(b-a)/(CICLO*MS_DAY);
 const sig=(e)=>e.type==="retirada"?-Math.abs(e.amount):Math.abs(e.amount);
-const valorEm=(es,r,t)=>es.reduce((s,e)=>{const d=toDate(e.date).getTime();return d>t?s:s+sig(e)*cresce(r,meses(d,t));},0);
+function rende(base,r,c){
+  if(c<=0) return base;
+  const fechados=Math.floor(c), resto=c-fechados;
+  const saldo=base*Math.pow(1+r,fechados);
+  return saldo+saldo*r*resto;
+}
+const valorEm=(es,r,t)=>es.reduce((s,e)=>{const d=toDate(e.date).getTime();return d>t?s:s+rende(sig(e),r,ciclos(d,t));},0);
 const capitalEm=(es,t)=>es.reduce((s,e)=>toDate(e.date).getTime()>t?s:s+sig(e),0);
 
 /* ─── onde os dados ficam guardados ─── */
@@ -228,7 +240,7 @@ function GraficoLinha({dados:ds,altura=300}){
       <svg width="100%" height={H} onMouseMove={mover} onMouseLeave={()=>setHi(null)} onTouchMove={mover} style={{display:"block",touchAction:"pan-y"}}>
         <defs>
           <linearGradient id="ga" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor={GOLD} stopOpacity=".34"/><stop offset="100%" stopColor={GOLD} stopOpacity="0"/>
+            <stop offset="0%" stopColor={POSITIVO} stopOpacity=".22"/><stop offset="100%" stopColor={POSITIVO} stopOpacity="0"/>
           </linearGradient>
         </defs>
         {ticks.map((t,i)=>(<g key={i}>
@@ -239,16 +251,16 @@ function GraficoLinha({dados:ds,altura=300}){
           {new Date(ds[i].t).toLocaleDateString("pt-BR",{day:"2-digit",month:"short"})}</text>))}
         <path d={area()} fill="url(#ga)"/>
         <path d={linha("aportado")} fill="none" stroke={MUTED} strokeWidth="1.4" strokeDasharray="2 4"/>
-        <path d={linha("patrimonio")} fill="none" stroke={GOLD} strokeWidth="2.4"/>
-        <path d={linha("projecao")} fill="none" stroke={GREEN} strokeWidth="2" strokeDasharray="5 5"/>
+        <path d={linha("patrimonio")} fill="none" stroke={TXT} strokeWidth="2.6"/>
+        <path d={linha("projecao")} fill="none" stroke={POSITIVO} strokeWidth="2" strokeDasharray="5 5"/>
         {p&&(<g>
-          <line x1={X(hi)} x2={X(hi)} y1={pT} y2={pT+ih} stroke={GOLD} strokeOpacity=".35"/>
-          <circle cx={X(hi)} cy={Y(p.patrimonio!=null?p.patrimonio:p.projecao)} r="4.5" fill={p.patrimonio!=null?GOLD:GREEN} stroke={BG} strokeWidth="2"/>
+          <line x1={X(hi)} x2={X(hi)} y1={pT} y2={pT+ih} stroke={ACENTO} strokeOpacity=".35"/>
+          <circle cx={X(hi)} cy={Y(p.patrimonio!=null?p.patrimonio:p.projecao)} r="4.5" fill={p.patrimonio!=null?TXT:POSITIVO} stroke={BG} strokeWidth="2.5"/>
         </g>)}
       </svg>
       {p&&(<div className="glass" style={{position:"absolute",top:6,left:Math.min(Math.max(X(hi)-70,pL),W-160),padding:"9px 12px",borderRadius:12,pointerEvents:"none",minWidth:150}}>
         <div style={{color:MUTED,fontSize:11,marginBottom:3}}>{new Date(p.t).toLocaleDateString("pt-BR")}</div>
-        <div className="num" style={{fontSize:13,color:p.patrimonio!=null?GOLD:GREEN,fontWeight:650}}>{brl(p.patrimonio!=null?p.patrimonio:p.projecao,0)}</div>
+        <div className="num" style={{fontSize:14,color:p.patrimonio!=null?TXT:POSITIVO,fontWeight:800}}>{brl(p.patrimonio!=null?p.patrimonio:p.projecao,0)}</div>
         <div className="num" style={{fontSize:11.5,color:MUTED}}>Capital: {brl(p.aportado,0)}</div>
       </div>)}
     </div>
@@ -275,8 +287,8 @@ function GraficoBarras({dados:ds,altura=270}){
     <div ref={ref} style={{position:"relative"}}>
       <svg width="100%" height={H} style={{display:"block"}} onMouseLeave={()=>setHi(null)}>
         <defs>
-          <linearGradient id="gb" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stopColor={GREEN} stopOpacity=".95"/><stop offset="100%" stopColor={GREEN} stopOpacity=".22"/></linearGradient>
-          <linearGradient id="gbp" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stopColor={GOLD} stopOpacity=".85"/><stop offset="100%" stopColor={GOLD} stopOpacity=".18"/></linearGradient>
+          <linearGradient id="gb" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stopColor={POSITIVO} stopOpacity=".95"/><stop offset="100%" stopColor={POSITIVO} stopOpacity=".22"/></linearGradient>
+          <linearGradient id="gbp" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stopColor={SUAVE} stopOpacity="1"/><stop offset="100%" stopColor={SUAVE} stopOpacity=".45"/></linearGradient>
         </defs>
         {ticks.map((t,i)=>(<g key={i}>
           <line x1={pL} x2={W-pR} y1={Y(t)} y2={Y(t)} stroke={LINE}/>
@@ -287,13 +299,13 @@ function GraficoBarras({dados:ds,altura=270}){
           return (<g key={d.key} onMouseEnter={()=>setHi(i)}>
             <rect x={pL+passo*i} y={pT} width={passo} height={ih} fill={hi===i?"rgba(255,255,255,.03)":"transparent"}/>
             <path d={barra(x,y,larg,h,7)} fill={d.parcial?"url(#gbp)":"url(#gb)"}/>
-            <text x={pL+passo*i+passo/2} y={H-9} textAnchor="middle" fill={MUTED} fontSize="11">{curtoNome?d.mesCurto:d.mes}</text>
+            {(passo>=30||i%2===0)&&<text x={pL+passo*i+passo/2} y={H-9} textAnchor="middle" fill={MUTED} fontSize="11.5" fontWeight="600">{curtoNome?d.mesCurto:d.mes}</text>}
           </g>);
         })}
       </svg>
       {hi!=null&&(<div className="glass" style={{position:"absolute",top:6,left:Math.min(Math.max(pL+passo*hi-40,pL),W-170),padding:"9px 12px",borderRadius:12,pointerEvents:"none",minWidth:150}}>
         <div style={{color:MUTED,fontSize:11,marginBottom:3}}>{ds[hi].mes} {ds[hi].ano}{ds[hi].parcial?" · em andamento":""}</div>
-        <div className="num" style={{fontSize:13,color:ds[hi].parcial?GOLD:GREEN,fontWeight:650}}>{brl(ds[hi].lucro)}</div>
+        <div className="num" style={{fontSize:14,color:ds[hi].parcial?TXT:POSITIVO,fontWeight:800}}>{brl(ds[hi].lucro)}</div>
       </div>)}
     </div>
   );
@@ -306,7 +318,7 @@ function Secao({titulo,dica,direita,children}){
   return (<section style={{marginBottom:24}}>
     <div className="row mid wrapf" style={{justifyContent:"space-between",gap:12,marginBottom:12,padding:"0 4px"}}>
       <div>
-        <h2 style={{fontSize:17,fontWeight:600,letterSpacing:"-.01em",margin:0}}>{titulo}</h2>
+        <h2 style={{fontSize:18.5,fontWeight:800,letterSpacing:"-.01em",margin:0}}>{titulo}</h2>
         {dica&&<p style={{color:MUTED,fontSize:12.5,margin:"3px 0 0"}}>{dica}</p>}
       </div>{direita}
     </div>
@@ -314,7 +326,7 @@ function Secao({titulo,dica,direita,children}){
   </section>);
 }
 
-function Card({ico,emoji,rotulo,valor,sub,cor=GOLD,atraso=0,vivo}){
+function Card({ico,emoji,rotulo,valor,sub,cor=ACENTO,atraso=0,vivo}){
   return (<div className="glass rise" style={{padding:18,animationDelay:atraso+"ms",position:"relative",overflow:"hidden"}}>
     <div style={{position:"absolute",inset:0,pointerEvents:"none",background:`radial-gradient(120% 100% at 0% 0%, ${cor}14, transparent 60%)`}}/>
     <div className="row mid" style={{justifyContent:"space-between",marginBottom:12,position:"relative"}}>
@@ -322,7 +334,7 @@ function Card({ico,emoji,rotulo,valor,sub,cor=GOLD,atraso=0,vivo}){
       <span className="icobox" style={{width:30,height:30,background:cor+"1A",border:"1px solid "+cor+"33"}}><I n={ico} c={cor} s={15}/></span>
     </div>
     <div className="row" style={{alignItems:"baseline",gap:8,position:"relative"}}>
-      <span className="num" style={{fontSize:25,fontWeight:650,letterSpacing:"-.02em"}}>{valor}</span>
+      <span className="num" style={{fontSize:27,fontWeight:800,letterSpacing:"-.02em"}}>{valor}</span>
       {vivo&&<span className="dot" style={{marginBottom:4}}/>}
     </div>
     {sub&&<div style={{color:MUTED,fontSize:12.5,marginTop:6,position:"relative"}}>{sub}</div>}
@@ -338,7 +350,7 @@ function Campo({rotulo,children}){
 
 function Tabela({linhas,aoExcluir}){
   if(!linhas.length) return <div style={{color:MUTED,fontSize:13.5,padding:"28px 0",textAlign:"center"}}>Nada registrado por aqui ainda.</div>;
-  const sel={aporte:{t:"Aporte",c:GOLD},retirada:{t:"Retirada",c:RED},rendimento:{t:"Rendimento",c:GREEN}};
+  const sel={aporte:{t:"Aporte",c:TXT},retirada:{t:"Retirada",c:RED},rendimento:{t:"Rendimento",c:POSITIVO}};
   return (<div className="scrollx"><table>
     <thead><tr><th style={{textAlign:"left"}}>Data</th><th style={{textAlign:"left"}}>Descrição</th><th style={{textAlign:"right"}}>Valor</th>{aoExcluir&&<th style={{width:40}}></th>}</tr></thead>
     <tbody>{linhas.map(r=>{const b=sel[r.tipo]||sel.aporte;return(
@@ -347,7 +359,7 @@ function Tabela({linhas,aoExcluir}){
         <td><span className="row mid" style={{gap:10}}>
           <span className="pill" style={{color:b.c,background:b.c+"18",border:"1px solid "+b.c+"30"}}>{b.t}</span>
           <span>{r.desc}</span></span></td>
-        <td className="num" style={{textAlign:"right",fontWeight:650,whiteSpace:"nowrap",color:r.tipo==="rendimento"?GREEN:r.valor<0?RED:TXT}}>
+        <td className="num" style={{textAlign:"right",fontWeight:650,whiteSpace:"nowrap",color:r.tipo==="rendimento"?POSITIVO:r.valor<0?RED:TXT}}>
           {r.valor<0?"− ":""}{brl(Math.abs(r.valor),r.tipo==="rendimento"?2:0)}</td>
         {aoExcluir&&<td style={{textAlign:"right"}}>{r.tipo!=="rendimento"&&
           <button onClick={()=>aoExcluir(r.id)} title="Excluir" style={{background:"none",border:"none",cursor:"pointer",padding:4}}><I n="trash" s={14}/></button>}</td>}
@@ -374,7 +386,7 @@ function Formulario({fechar,salvar}){
         <button onClick={fechar} style={{background:"none",border:"none",cursor:"pointer"}}><I n="x" s={18}/></button>
       </div>
       <div className="grid" style={{gridTemplateColumns:"1fr 1fr",gap:8,marginBottom:16}}>
-        {[{id:"aporte",l:"Aporte",c:GREEN},{id:"retirada",l:"Retirada",c:RED}].map(t=>(
+        {[{id:"aporte",l:"Aporte",c:POSITIVO},{id:"retirada",l:"Retirada",c:RED}].map(t=>(
           <button key={t.id} onClick={()=>setType(t.id)} style={{padding:"10px 0",borderRadius:12,fontSize:13.5,fontWeight:650,cursor:"pointer",
             color:type===t.id?t.c:MUTED,background:type===t.id?t.c+"14":"rgba(255,255,255,.03)",border:"1px solid "+(type===t.id?t.c+"44":LINE)}}>{t.l}</button>))}
       </div>
@@ -457,7 +469,7 @@ function Painel(){
   const roi=capital>0?juros/capital:0;
   const dias=Math.max(0,Math.floor((now-t0)/MS_DAY));
   const anual=Math.pow(1+rate,12)-1;
-  const porDia=atual*(Math.pow(1+rate,1/AVG_MONTH)-1);
+  const porDia=valorEm(entries,rate,now+MS_DAY)-atual;
   const zero=new Date(now); zero.setHours(0,0,0,0);
   const fluxoHoje=entries.filter(e=>{const d=toDate(e.date).getTime();return d>=zero.getTime()&&d<=now;}).reduce((s,e)=>s+sig(e),0);
   const hoje=Math.max(0,atual-valorEm(entries,rate,zero.getTime())-fluxoHoje);
@@ -470,12 +482,12 @@ function Painel(){
     for(let i=0;i<=N;i++){ const t=t0+((now-t0)*i)/N;
       pts.push({t,patrimonio:valorEm(entries,rate,t),aportado:capitalEm(entries,t),projecao:null}); }
     if(pts.length) pts[pts.length-1].projecao=pts[pts.length-1].patrimonio;
-    for(let i=1;i<=6;i++){ const t=now+i*AVG_MONTH*MS_DAY;
+    for(let i=1;i<=6;i++){ const t=now+i*CICLO*MS_DAY;
       pts.push({t,patrimonio:null,aportado:capitalEm(entries,t),projecao:valorEm(entries,rate,t)}); }
     return pts;
   },[entries,rate,now,ord.length,t0]);
 
-  const mensal=useMemo(()=>{
+  const mensalHist=useMemo(()=>{
     if(!ord.length) return [];
     const p=toDate(ord[0].date); const out=[];
     let d=new Date(p.getFullYear(),p.getMonth(),1);
@@ -491,24 +503,51 @@ function Painel(){
     return out;
   },[entries,rate,now,ord]);
 
+  // Sempre 12 meses na tela: os 11 anteriores mais o atual.
+  // Quando o mês vira, o mais antigo sai e o novo entra.
+  const mensal=useMemo(()=>{
+    const hoje=new Date(now), out=[];
+    for(let k=11;k>=0;k--){
+      const d=new Date(hoje.getFullYear(),hoje.getMonth()-k,1);
+      const ini=d.getTime();
+      const fimReal=new Date(d.getFullYear(),d.getMonth()+1,1).getTime()-1;
+      const fim=Math.min(fimReal,now);
+      let lucro=0;
+      if(fim>ini){
+        const fl=entries.filter(e=>{const x=toDate(e.date).getTime();return x>=ini&&x<=fim;}).reduce((a,e)=>a+sig(e),0);
+        lucro=Math.max(0,valorEm(entries,rate,fim)-valorEm(entries,rate,ini)-fl);
+      }
+      out.push({key:d.getFullYear()+"-"+d.getMonth(),mes:MESES[d.getMonth()],mesCurto:MES_CURTO[d.getMonth()],
+        ano:d.getFullYear(),lucro,parcial:fimReal>now});
+    }
+    return out;
+  },[entries,rate,now]);
+
   const melhor=useMemo(()=>mensal.reduce((a,b)=>(!a||b.lucro>a.lucro?b:a),null),[mensal]);
 
   const extrato=useMemo(()=>{
     const l=entries.map(e=>({id:e.id,date:e.date,desc:e.description||(e.type==="aporte"?"Aporte":"Retirada"),valor:sig(e),tipo:e.type}));
-    mensal.forEach(m=>{ if(m.lucro>.005) l.push({id:"r-"+m.key,date:m.fimIso,desc:m.parcial?"Rendimentos (parcial)":"Rendimentos",valor:m.lucro,tipo:"rendimento"}); });
+    mensalHist.forEach(m=>{ if(m.lucro>.005) l.push({id:"r-"+m.key,date:m.fimIso,desc:m.parcial?"Rendimentos (parcial)":"Rendimentos",valor:m.lucro,tipo:"rendimento"}); });
     return l.sort((a,b)=>b.date===a.date?(a.tipo==="rendimento"?-1:1):b.date.localeCompare(a.date));
-  },[entries,mensal]);
+  },[entries,mensalHist]);
 
   const posicoes=useMemo(()=>ord.map(e=>{
-    const t=toDate(e.date).getTime(), m=Math.max(0,meses(t,now)), v=sig(e)*cresce(rate,m);
-    return Object.assign({},e,{meses:m,dias:Math.max(0,Math.floor((now-t)/MS_DAY)),atual:v,rendeu:v-sig(e),roi:cresce(rate,m)-1});
+    const t=toDate(e.date).getTime(), c=Math.max(0,ciclos(t,now)), v=rende(sig(e),rate,c);
+    const p=Math.abs(sig(e));
+    const saldo=p*Math.pow(1+rate,Math.floor(c));
+    return Object.assign({},e,{
+      fechados:Math.floor(c),
+      faltam:Math.max(0,Math.ceil((Math.floor(c)+1-c)*CICLO)),
+      credito:saldo*rate,
+      dias:Math.max(0,Math.floor((now-t)/MS_DAY)),
+      atual:v,rendeu:v-sig(e),roi:p>0?Math.abs(v)/p-1:0});
   }).reverse(),[ord,rate,now]);
 
   const projecao=useMemo(()=>{
     const o=[];
-    for(let i=1;i<=12;i++){ const t=now+i*AVG_MONTH*MS_DAY, v=valorEm(entries,rate,t);
-      const ant=valorEm(entries,rate,now+(i-1)*AVG_MONTH*MS_DAY), d=new Date(t);
-      o.push({i,mes:MES_CURTO[d.getMonth()]+"/"+String(d.getFullYear()).slice(2),valor:v,ganho:v-ant,acumulado:v-capital}); }
+    for(let i=1;i<=12;i++){ const t=now+i*CICLO*MS_DAY, v=valorEm(entries,rate,t);
+      const ant=valorEm(entries,rate,now+(i-1)*CICLO*MS_DAY), d=new Date(t);
+      o.push({i,mes:i+"º ciclo",data:d.toLocaleDateString("pt-BR"),valor:v,ganho:v-ant,acumulado:v-capital}); }
     return o;
   },[entries,rate,now,capital]);
 
@@ -532,51 +571,51 @@ function Painel(){
       <div className="row wrapf" style={{justifyContent:"space-between",gap:16,alignItems:"flex-start"}}>
         <div>
           <div className="row mid" style={{gap:10,marginBottom:10}}>
-            <span className="icobox" style={{width:34,height:34,borderRadius:11,background:"linear-gradient(145deg,"+GOLD+",#8c6f18)",boxShadow:"0 8px 24px -10px "+GOLD}}>
-              <I n="spark" c="#0F1115" s={17} w={2.4}/></span>
+            <span className="icobox" style={{width:34,height:34,borderRadius:11,background:"linear-gradient(145deg,"+POSITIVO+","+ACENTO+")",boxShadow:"0 8px 24px -10px "+ACENTO}}>
+              <I n="spark" c="#fff" s={17} w={2.4}/></span>
             <div style={{height:22,width:1,background:LINE}}/>
             <Eyebrow>{settings.nome}</Eyebrow>
           </div>
-          <h1 style={{fontSize:34,fontWeight:700,letterSpacing:"-.035em",lineHeight:1.05,margin:0,
-            background:"linear-gradient(100deg,"+TXT+" 35%,"+GOLD+")",WebkitBackgroundClip:"text",backgroundClip:"text",color:"transparent"}}>Painel do Investidor</h1>
+          <h1 style={{fontSize:36,fontWeight:800,letterSpacing:"-.03em",lineHeight:1.05,margin:0,
+            background:"linear-gradient(100deg,"+TXT+" 35%,"+ACENTO+")",WebkitBackgroundClip:"text",backgroundClip:"text",color:"transparent"}}>Painel do Investidor</h1>
           <p style={{color:MUTED,fontSize:14.5,margin:"6px 0 0"}}>Acompanhamento em tempo real</p>
         </div>
         <div className="row mid" style={{gap:8}}>
           <div className="glass row mid" style={{borderRadius:999,padding:"8px 14px",gap:8}}>
             <span className="dot"/><span style={{fontSize:12.5,color:MUTED}}>Hoje</span>
-            <strong className="num" style={{fontSize:13,color:GREEN}}>+{brl(hoje)}</strong>
+            <strong className="num" style={{fontSize:13,color:POSITIVO}}>+{brl(hoje)}</strong>
           </div>
           {podeEditar
-            ? <button className="btn gold" onClick={()=>setForm(true)}><I n="plus" c="#12140f" s={14}/> Novo lançamento</button>
+            ? <button className="btn gold" onClick={()=>setForm(true)}><I n="plus" c="#fff" s={14}/> Novo lançamento</button>
             : <button className="btn" onClick={()=>setLogin(true)}>Somente leitura · Entrar</button>}
         </div>
       </div>
       <nav className="row scrollx" style={{marginTop:24,gap:4,borderBottom:"1px solid "+LINE,paddingBottom:1}}>
         {ABAS.map(t=>(<button key={t.id} className={"tabbtn"+(aba===t.id?" on":"")} onClick={()=>setAba(t.id)}>
-          <I n={t.i} c={aba===t.id?GOLD:MUTED} s={15}/>{t.l}</button>))}
+          <I n={t.i} c={aba===t.id?ACENTO:MUTED} s={15}/>{t.l}</button>))}
       </nav>
     </header>
 
     {/* VISÃO GERAL */}
     {aba==="visao"&&(<React.Fragment>
       <div className="grid g4" style={{marginBottom:26}}>
-        <Card ico="wallet" emoji="💰" rotulo="Valor investido" valor={brl(capital,0)} cor={GOLD} atraso={0}
+        <Card ico="wallet" emoji="💰" rotulo="Valor investido" valor={brl(capital,0)} cor={TXT} atraso={0}
           sub={retirado>0?brl(aportado,0)+" aportados · "+brl(retirado,0)+" retirados":entries.filter(e=>e.type==="aporte").length+" aporte(s) · "+dias+" dias"}/>
-        <Card ico="trend" emoji="📈" rotulo="Valorização" valor={pct(roi)} cor={GREEN} atraso={70}
-          sub={(rate*100).toFixed(2).replace(".",",")+"% ao mês · "+(dias/AVG_MONTH).toFixed(1).replace(".",",")+" meses"}/>
-        <Card ico="bank" emoji="💵" rotulo="Valor atual" valor={brl(atual)} cor={GOLD} atraso={140} vivo sub={"+"+brl(porDia)+" por dia"}/>
-        <Card ico="coin" emoji="💸" rotulo="Lucro acumulado" valor={brl(juros)} cor={GREEN} atraso={210} sub={"Próximos 30 dias: +"+brl(em30,0)}/>
+        <Card ico="trend" emoji="📈" rotulo="Valorização" valor={pct(roi)} cor={POSITIVO} atraso={70}
+          sub={(rate*100).toFixed(2).replace(".",",")+"% a cada 30 dias · "+Math.floor(dias/CICLO)+" ciclos fechados"}/>
+        <Card ico="bank" emoji="💵" rotulo="Valor atual" valor={brl(atual)} cor={TXT} atraso={140} vivo sub={"+"+brl(porDia)+" por dia"}/>
+        <Card ico="coin" emoji="💸" rotulo="Lucro acumulado" valor={brl(juros)} cor={POSITIVO} atraso={210} sub={"Próximos 30 dias: +"+brl(em30,0)}/>
       </div>
 
       <div className="glass rise" style={{padding:18,marginBottom:26,animationDelay:"260ms"}}>
         <div className="row mid wrapf" style={{justifyContent:"space-between",gap:8,marginBottom:12}}>
-          <span className="row mid" style={{gap:8}}><I n="target" c={GOLD} s={15}/>
+          <span className="row mid" style={{gap:8}}><I n="target" c={ACENTO} s={15}/>
             <span style={{fontSize:13.5,fontWeight:600}}>Meta de patrimônio</span>
             <span style={{color:MUTED,fontSize:12.5}}>· {brl(settings.meta,0)}</span></span>
-          <span className="num" style={{fontSize:13,color:GOLD,fontWeight:650}}>{(metaPct*100).toFixed(1).replace(".",",")}%</span>
+          <span className="num" style={{fontSize:13,color:ACENTO,fontWeight:650}}>{(metaPct*100).toFixed(1).replace(".",",")}%</span>
         </div>
         <div style={{height:8,borderRadius:99,background:"rgba(255,255,255,.06)",overflow:"hidden"}}>
-          <div style={{width:(metaPct*100)+"%",height:"100%",borderRadius:99,background:"linear-gradient(90deg,"+GREEN+","+GOLD+")",transition:"width 1.2s cubic-bezier(.16,1,.3,1)"}}/>
+          <div style={{width:(metaPct*100)+"%",height:"100%",borderRadius:99,background:"linear-gradient(90deg,"+POSITIVO+","+ACENTO+")",transition:"width 1.2s cubic-bezier(.16,1,.3,1)"}}/>
         </div>
         <div style={{color:MUTED,fontSize:12.5,marginTop:9}}>
           Faltam {brl(Math.max(0,settings.meta-atual),0)} — cerca de {Math.max(0,Math.ceil(Math.log(Math.max(1,settings.meta/Math.max(1,atual)))/Math.log(1+rate)))} meses no ritmo atual.
@@ -587,68 +626,54 @@ function Painel(){
         <GraficoLinha dados={linha}/>
       </Secao>
 
-      <Secao titulo="Rendimentos Mensais" dica={melhor?"Melhor mês: "+melhor.mes+" · "+brl(melhor.lucro,0):"Sem dados ainda."}>
+      <Secao titulo="Rendimentos Mensais" dica={"Últimos 12 meses"+(melhor&&melhor.lucro>0?" · melhor: "+melhor.mes+" com "+brl(melhor.lucro,0):"")}>
         <GraficoBarras dados={mensal}/>
         <div className="row mid" style={{gap:18,marginTop:10,paddingLeft:4,color:MUTED,fontSize:12}}>
-          <span className="row mid" style={{gap:6}}><i style={{width:9,height:9,borderRadius:3,background:GREEN,display:"inline-block"}}/> Mês fechado</span>
-          <span className="row mid" style={{gap:6}}><i style={{width:9,height:9,borderRadius:3,background:GOLD,display:"inline-block"}}/> Mês em andamento</span>
+          <span className="row mid" style={{gap:6}}><i style={{width:9,height:9,borderRadius:3,background:POSITIVO,display:"inline-block"}}/> Mês fechado</span>
+          <span className="row mid" style={{gap:6}}><i style={{width:9,height:9,borderRadius:3,background:SUAVE,display:"inline-block"}}/> Mês em andamento</span>
         </div>
       </Secao>
 
-      <Secao titulo="Movimentações recentes" dica="Aportes, retiradas e rendimentos apurados."
-        direita={<button className="btn" onClick={()=>setAba("extrato")}>Ver tudo <I n="right" s={14}/></button>}>
-        <Tabela linhas={extrato.slice(0,8)}/>
-      </Secao>
-
-      <div className="grid g3">
-        {[{l:"ROI Total",v:pct(roi),s:brl(juros,0)+" de lucro em "+dias+" dias",c:GREEN},
-          {l:"Rentabilidade Mensal",v:pct(rate),s:"Taxa fixa contratada",c:GOLD},
-          {l:"Rentabilidade Anual Estimada",v:pct(anual),s:"Juros compostos sobre 12 meses",c:GOLD}].map((f,i)=>(
-          <div key={f.l} className="glass rise" style={{padding:18,animationDelay:(i*80)+"ms"}}>
-            <Eyebrow>{f.l}</Eyebrow>
-            <div className="num" style={{color:f.c,fontSize:27,fontWeight:700,letterSpacing:"-.02em",marginTop:8}}>{f.v}</div>
-            <div style={{color:MUTED,fontSize:12.5,marginTop:4}}>{f.s}</div>
-          </div>))}
-      </div>
     </React.Fragment>)}
 
     {/* APORTES */}
     {aba==="aportes"&&(<React.Fragment>
       <div className="grid g3" style={{marginBottom:22}}>
-        <Card ico="wallet" rotulo="Capital em operação" valor={brl(capital,0)} cor={GOLD}/>
-        <Card ico="pulse" rotulo="Posições ativas" valor={String(posicoes.length)} cor={GOLD} sub={"Desde "+(ord.length?fmtDate(ord[0].date):"—")}/>
-        <Card ico="coin" rotulo="Rendendo agora" valor={"+"+brl(porDia)+"/dia"} cor={GREEN} vivo sub={"+"+brl(porDia/24)+" por hora"}/>
+        <Card ico="wallet" rotulo="Capital em operação" valor={brl(capital,0)} cor={ACENTO}/>
+        <Card ico="pulse" rotulo="Posições ativas" valor={String(posicoes.length)} cor={ACENTO} sub={"Desde "+(ord.length?fmtDate(ord[0].date):"—")}/>
+        <Card ico="coin" rotulo="Rendendo agora" valor={"+"+brl(porDia)+"/dia"} cor={POSITIVO} vivo sub={"+"+brl(porDia/24)+" por hora"}/>
       </div>
-      <Secao titulo="Seus aportes" dica="Cada lançamento com data, tempo aplicado e quanto já rendeu."
-        direita={podeEditar?<button className="btn gold" onClick={()=>setForm(true)}><I n="plus" c="#12140f" s={14}/> Adicionar</button>:null}>
+      <Secao titulo="Seus aportes" dica="Cada lançamento com data, ciclos fechados e quando cai o próximo crédito."
+        direita={podeEditar?<button className="btn gold" onClick={()=>setForm(true)}><I n="plus" c="#fff" s={14}/> Adicionar</button>:null}>
         {!posicoes.length?(
           <div style={{textAlign:"center",padding:"48px 0"}}>
             <div style={{fontSize:15,fontWeight:600}}>Nenhum lançamento ainda</div>
             <p style={{color:MUTED,fontSize:13,margin:"6px 0 16px"}}>Registre o primeiro aporte para o painel começar a calcular.</p>
-            {podeEditar&&<button className="btn gold" onClick={()=>setForm(true)}><I n="plus" c="#12140f" s={14}/> Adicionar aporte</button>}
+            {podeEditar&&<button className="btn gold" onClick={()=>setForm(true)}><I n="plus" c="#fff" s={14}/> Adicionar aporte</button>}
           </div>
         ):(<div className="grid" style={{gap:10}}>
           {posicoes.map(p=>{const neg=p.type==="retirada";return(
             <div key={p.id} style={{border:"1px solid "+LINE,borderRadius:16,background:"rgba(255,255,255,.02)",padding:16}}>
               <div className="row mid wrapf" style={{gap:14,justifyContent:"space-between"}}>
                 <div className="row mid" style={{gap:12,minWidth:0}}>
-                  <span className="icobox" style={{width:36,height:36,borderRadius:12,background:neg?"rgba(246,70,93,.12)":GREEN+"1A",border:"1px solid "+(neg?"rgba(246,70,93,.25)":GREEN+"33")}}>
-                    <I n={neg?"aDown":"aUp"} c={neg?RED:GREEN}/></span>
+                  <span className="icobox" style={{width:36,height:36,borderRadius:12,background:neg?"rgba(246,70,93,.12)":POSITIVO+"1A",border:"1px solid "+(neg?"rgba(246,70,93,.25)":POSITIVO+"33")}}>
+                    <I n={neg?"aDown":"aUp"} c={neg?RED:POSITIVO}/></span>
                   <div style={{minWidth:0}}>
                     <div style={{fontSize:14.5,fontWeight:600}}>{p.description}</div>
                     <div className="row mid" style={{gap:6,color:MUTED,fontSize:12.5}}>
-                      <I n="cal" s={12}/> {fmtDate(p.date)} · {p.dias} dias · {p.meses.toFixed(2).replace(".",",")} meses</div>
+                      <I n="cal" s={12}/> {fmtDate(p.date)} · {p.dias} dias · {p.fechados} ciclo(s) fechado(s)</div>
+                    <div style={{color:ACENTO,fontSize:12,marginTop:2}}>Próximo crédito em {p.faltam} dia(s): +{brl(p.credito,0)}</div>
                   </div>
                 </div>
                 <div className="row mid" style={{gap:22,marginLeft:"auto"}}>
                   <Col r="Valor" v={brl(Math.abs(p.amount),0)}/>
-                  <Col r="Valor hoje" v={brl(Math.abs(p.atual))} c={GOLD}/>
-                  <Col r="Rendeu" v={"+"+brl(Math.abs(p.rendeu))} c={GREEN} sub={pct(p.roi)}/>
+                  <Col r="Valor hoje" v={brl(Math.abs(p.atual))} c={ACENTO}/>
+                  <Col r="Rendeu" v={"+"+brl(Math.abs(p.rendeu))} c={POSITIVO} sub={pct(p.roi)}/>
                   {podeEditar&&<button onClick={()=>del(p.id)} title="Excluir" style={{background:"none",border:"none",cursor:"pointer",padding:6}}><I n="trash" s={15}/></button>}
                 </div>
               </div>
               <div style={{marginTop:12,height:4,borderRadius:99,background:"rgba(255,255,255,.05)",overflow:"hidden"}}>
-                <div style={{width:Math.min(100,(Math.abs(p.rendeu)/Math.max(1,Math.abs(p.atual)))*100)+"%",height:"100%",background:"linear-gradient(90deg,"+GREEN+","+GOLD+")",transition:"width 1s ease"}}/>
+                <div style={{width:Math.min(100,(Math.abs(p.rendeu)/Math.max(1,Math.abs(p.atual)))*100)+"%",height:"100%",background:"linear-gradient(90deg,"+POSITIVO+","+ACENTO+")",transition:"width 1s ease"}}/>
               </div>
             </div>);})}
         </div>)}
@@ -665,19 +690,19 @@ function Painel(){
     {/* PROJEÇÕES */}
     {aba==="projecao"&&(<React.Fragment>
       <div className="grid g3" style={{marginBottom:22}}>
-        <Card ico="pct" rotulo="Em 6 meses" valor={brl(valorEm(entries,rate,now+6*AVG_MONTH*MS_DAY),0)} cor={GOLD}/>
-        <Card ico="pct" rotulo="Em 12 meses" valor={brl(valorEm(entries,rate,now+12*AVG_MONTH*MS_DAY),0)} cor={GOLD}/>
-        <Card ico="trend" rotulo="Rentabilidade anual" valor={pct(anual)} cor={GREEN} sub="Sem novos aportes"/>
+        <Card ico="pct" rotulo="Em 6 ciclos" valor={brl(valorEm(entries,rate,now+6*CICLO*MS_DAY),0)} cor={ACENTO}/>
+        <Card ico="pct" rotulo="Em 12 ciclos" valor={brl(valorEm(entries,rate,now+12*CICLO*MS_DAY),0)} cor={ACENTO}/>
+        <Card ico="trend" rotulo="Rentabilidade anual" valor={pct(anual)} cor={POSITIVO} sub="Sem novos aportes"/>
       </div>
-      <Secao titulo="Projeção mês a mês" dica="Considera apenas o capital de hoje, sem novos aportes.">
+      <Secao titulo="Projeção ciclo a ciclo" dica="Cada ciclo fecha 30 dias depois do anterior. Considera apenas o capital de hoje, sem novos aportes.">
         <div className="scrollx"><table>
-          <thead><tr><th style={{textAlign:"left"}}>Mês</th><th style={{textAlign:"right"}}>Ganho no mês</th>
+          <thead><tr><th style={{textAlign:"left"}}>Ciclo</th><th style={{textAlign:"right"}}>Crédito</th>
             <th style={{textAlign:"right"}}>Lucro acumulado</th><th style={{textAlign:"right"}}>Patrimônio</th></tr></thead>
           <tbody>{projecao.map(p=>(<tr key={p.i}>
-            <td>{p.mes}</td>
-            <td style={{textAlign:"right",color:GREEN}}>+{brl(p.ganho,0)}</td>
+            <td>{p.mes} <span style={{color:MUTED,fontSize:12.5}}>· {p.data}</span></td>
+            <td style={{textAlign:"right",color:POSITIVO}}>+{brl(p.ganho,0)}</td>
             <td style={{textAlign:"right",color:MUTED}}>{brl(p.acumulado,0)}</td>
-            <td style={{textAlign:"right",color:GOLD,fontWeight:650}}>{brl(p.valor,0)}</td></tr>))}</tbody>
+            <td style={{textAlign:"right",color:ACENTO,fontWeight:650}}>{brl(p.valor,0)}</td></tr>))}</tbody>
         </table></div>
       </Secao>
     </React.Fragment>)}
@@ -694,8 +719,9 @@ function Painel(){
             onChange={e=>setSettings(s=>Object.assign({},s,{nome:e.target.value}))}/></Campo>
         </div>
         <p style={{color:MUTED,fontSize:12.5,marginTop:16,lineHeight:1.6}}>
-          Os juros são compostos e calculados por fração de mês (base de 30,44 dias). Por isso o valor sobe continuamente,
-          e não apenas na virada do mês. {sb?"Os dados estão sincronizados com o Supabase.":"Os dados estão salvos neste navegador."}
+          A taxa incide a cada 30 dias sobre o saldo do ciclo anterior: R$ 3.000 viram R$ 3.300 no dia 30 e R$ 3.630 no dia 60.
+          Dentro do ciclo em andamento o painel mostra o rendimento proporcional aos dias já corridos, sem juros sobre juros diários.
+          Cada aporte tem o seu próprio ciclo, contado a partir da data em que foi lançado. {sb?"Os dados estão sincronizados com o Supabase.":"Os dados estão salvos neste navegador."}
         </p>
       </Secao>
       <Secao titulo="Backup dos dados" dica="Baixe um arquivo com tudo, ou restaure de um backup anterior.">
@@ -729,7 +755,7 @@ function Col({r,v,sub,c=TXT}){
   return (<div style={{textAlign:"right"}}>
     <div style={{color:MUTED,fontSize:10.5,letterSpacing:".1em",textTransform:"uppercase",fontWeight:600}}>{r}</div>
     <div className="num" style={{color:c,fontSize:14.5,fontWeight:650,marginTop:2}}>{v}</div>
-    {sub&&<div style={{color:GREEN,fontSize:11.5}}>{sub}</div>}
+    {sub&&<div style={{color:POSITIVO,fontSize:11.5}}>{sub}</div>}
   </div>);
 }
 
